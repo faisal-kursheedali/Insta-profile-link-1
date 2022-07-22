@@ -1,6 +1,6 @@
 //input
 var username=prompt("what's your name?")
 // processing
-var welcomemessage= "Yes, I know that you're " + username
+var welcomemessage= "Fuck you " + username
 //output
 alert(welcomemessage);
