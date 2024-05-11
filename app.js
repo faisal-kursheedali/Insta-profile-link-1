@@ -3,15 +3,16 @@ const USER_ID = localStorage.getItem("userID")
   : Date.now() + Math.random();
 localStorage.setItem("userID", USER_ID);
 const dateTime = new Date().toISOString();
+let serverURL = "https://insta-profile-link.vercel.app/api";
 
-fetch(`http://localhost:3000/api/insta_load/${USER_ID}/${dateTime}`)
+fetch(`${serverURL}/insta_load/${USER_ID}/${dateTime}`)
   .then((res) => res.json())
   .then((val) => console.log(val));
 //input
 var username = prompt("what's your name?");
 username === null || username === "" ? (username = "null") : null;
 fetch(
-  `http://localhost:3000/api/insta_name_give/${username.toString()}/${USER_ID}/${dateTime}`
+  `${serverURL}/insta_name_give/${username.toString()}/${USER_ID}/${dateTime}`
 )
   .then((res) => res.json())
   .then((val) => console.log(val));

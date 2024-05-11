@@ -33,7 +33,7 @@ app.get("/api/insta_name_give/:name/:id/:date", async (req, res) => {
     let name = req.params.name;
     let id = req.params.id;
     let date = req.params.date;
-    addUser({ id, date, ip, name });
+    await addUser({ id, date, ip, name });
     res.send("8000");
   } catch (e) {
     console.log(e);
