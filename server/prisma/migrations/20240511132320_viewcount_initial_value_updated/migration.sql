@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Users" ALTER COLUMN "visitCount" SET DEFAULT 1,
+ALTER COLUMN "userNames" SET DEFAULT ARRAY[]::TEXT[];
