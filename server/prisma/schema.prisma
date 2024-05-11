@@ -17,7 +17,7 @@ model Users {
   id Int @id @default(autoincrement())
   userId String? @unique
   isAdmin Boolean? @default(false)
-  visitCount Int? @default(1)
+  visitCount Int? @default(0)
   userIP String?
   userNames String[] @default([])
   countryName String?
