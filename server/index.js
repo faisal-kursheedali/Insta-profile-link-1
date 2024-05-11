@@ -19,7 +19,7 @@ app.get("/api/insta_load/:id/:date", async (req, res) => {
     let id = req.params.id;
     let date = req.params.date;
 
-    addUser({ id, date, ip, isOnload: true });
+    await addUser({ id, date, ip, isOnload: true });
     res.send("2000");
   } catch (e) {
     console.log(e);
