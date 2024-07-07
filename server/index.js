@@ -56,6 +56,21 @@ app.get("/api/insta_name_give/:name/:id/:date", async (req, res) => {
   }
 });
 
+app.get("/api/portfolio_name_give/:name/:id/:date", async (req, res) => {
+  const ip = getIp(req);
+  try {
+    let name = req.params.name;
+    let id = req.params.id;
+    let date = req.params.date;
+    await addUser({ id, date, ip, name, isPortfolio: true });
+    res.send("8000");
+  } catch (e) {
+    console.log(e);
+    await addError(e, userIP);
+    return response.status(400).json({ message: "Some thing went wrong" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

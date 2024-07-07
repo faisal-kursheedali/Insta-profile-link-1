@@ -14,21 +14,7 @@ const addUser = async ({
   const dateUTC = new Date(date);
   if (await verifyUser(id)) {
     try {
-      const user = isPortfolio
-        ? await prisma.users.update({
-            data: {
-              userVisits: {
-                push: dateUTC,
-              },
-              visitCount: {
-                increment: 1,
-              },
-            },
-            where: {
-              userId: id,
-            },
-          })
-        : !isOnload
+      const user = !isOnload
         ? await prisma.users.update({
             data: {
               // userVisits: {
@@ -79,25 +65,20 @@ const addUser = async ({
   }
   try {
     const data = await getUserLocation({ ip, id, joinUTCDate: dateUTC, name });
-    const user = isPortfolio
-      ? await prisma.users.create({
-          data: {
-            ...data,
-            isPortfolio,
-          },
-        })
-      : !isOnload
+    const user = !isOnload
       ? await prisma.users.create({
           data: {
             ...data,
             userNames: {
               push: name,
             },
+            isPortfolio,
           },
         })
       : await prisma.users.create({
           data: {
             ...data,
+            isPortfolio,
           },
         });
     // await sendSlackMessage({
