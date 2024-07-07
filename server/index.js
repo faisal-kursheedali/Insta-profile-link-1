@@ -27,6 +27,20 @@ app.get("/api/insta_load/:id/:date", async (req, res) => {
     return response.status(400).json({ message: "Some thing went wrong" });
   }
 });
+app.get("/api/portfolio/:id/:date", async (req, res) => {
+  const ip = getIp(req);
+  try {
+    let id = req.params.id;
+    let date = req.params.date;
+
+    await addUser({ id, date, ip, isOnload: true, isPortfolio: true });
+    res.send("2000");
+  } catch (e) {
+    console.log(e);
+    await addError(e, userIP);
+    return response.status(400).json({ message: "Some thing went wrong" });
+  }
+});
 app.get("/api/insta_name_give/:name/:id/:date", async (req, res) => {
   const ip = getIp(req);
   try {

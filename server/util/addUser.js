@@ -3,11 +3,32 @@ const verifyUser = require("./verifyUser");
 // const { sendSlackMessage } = require("./slack");
 const addError = require("./error");
 
-const addUser = async ({ date, id, ip, name, isOnload = false }) => {
+const addUser = async ({
+  date,
+  id,
+  ip,
+  name,
+  isOnload = false,
+  isPortfolio = false,
+}) => {
   const dateUTC = new Date(date);
   if (await verifyUser(id)) {
     try {
-      const user = !isOnload
+      const user = isPortfolio
+        ? await prisma.users.update({
+            data: {
+              userVisits: {
+                push: dateUTC,
+              },
+              visitCount: {
+                increment: 1,
+              },
+            },
+            where: {
+              userId: id,
+            },
+          })
+        : !isOnload
         ? await prisma.users.update({
             data: {
               // userVisits: {
@@ -58,7 +79,14 @@ const addUser = async ({ date, id, ip, name, isOnload = false }) => {
   }
   try {
     const data = await getUserLocation({ ip, id, joinUTCDate: dateUTC, name });
-    const user = !isOnload
+    const user = isPortfolio
+      ? await prisma.users.create({
+          data: {
+            ...data,
+            isPortfolio,
+          },
+        })
+      : !isOnload
       ? await prisma.users.create({
           data: {
             ...data,
